@@ -13,7 +13,7 @@ compose-down:
 	docker-compose rm -f
 
 migration-up:
-	@echo "migration up"
+	$(GOPATH)/bin/goose -dir ./database/migration mysql "cake:secret@/cake_store?parseTime=true" up
 
 migration-down:
-	@echo "migration down"
+	$(GOPATH)/bin/goose -dir ./database/migration mysql "cake:secret@/cake_store?parseTime=true" down
