@@ -1,0 +1,173 @@
+openapi: 3.0.3
+info:
+  title: Cake Store Service API
+  description: API Spec for Cake Store Service
+  version: '1.0'
+servers:
+  - url: http://localhost:8090/api
+paths:
+  /cakes:
+    get:
+      tags: ["Cakes API"]
+      summary: Get a list the cakes
+      responses:
+        '200':
+          $ref: '#/components/responses/cakesRes'
+    post:
+      tags: ["Cakes API"]
+      summary: Add a cake to the cakes list
+      requestBody:
+        $ref: '#/components/requestBodies/cakeReq'
+      responses:
+        '201':
+          $ref: '#/components/responses/cakeRes'
+        '400':
+          $ref: '#/components/responses/badRequestRes'
+  /cakes/{id}:
+    parameters:
+      - $ref: '#/components/parameters/cakeIdParam'
+    get:
+      tags: ["Cakes API"]
+      summary: Get the details of a cake
+      responses:
+        '200':
+          $ref: '#/components/responses/cakeRes'
+        '404':
+          $ref: '#/components/responses/notFoundRes'
+    patch:
+      tags: ["Cakes API"]
+      summary: Update a cake from the cakes list
+      requestBody:
+        $ref: '#/components/requestBodies/cakeReq'
+      responses:
+        '200':
+          $ref: '#/components/responses/cakeRes'
+        '400':
+          $ref: '#/components/responses/badRequestRes'
+        '404':
+          $ref: '#/components/responses/notFoundRes'
+    delete:
+      tags: ["Cakes API"]
+      summary: Get the details of a cake
+      description: return the details of a cake
+      responses:
+        '200':
+          $ref: '#/components/responses/deleteSuccessRes'
+        '404':
+          $ref: '#/components/responses/notFoundRes'
+          
+components:
+  schemas:
+    errorObj:
+      type: object
+      properties:
+        code:
+          type: integer
+        error:
+          type: string
+        message:
+          type: string
+    successObj:
+      type: object
+      properties:
+        code:
+          type: integer
+        status:
+          type: string
+    cakeObjRes:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+        description:
+          type: string
+        rating:
+          type: number
+          format: float
+        image:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    cakeObjReq:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        rating:
+          type: number
+          format: float
+        image:
+          type: string
+  parameters:
+    cakeIdParam:
+      in: path
+      name: id
+      required: true
+      description: cake id
+      schema:
+        type: integer
+        format: int64
+        minimum: 1
+  requestBodies:
+    cakeReq:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/cakeObjReq'
+  responses:
+    cakeRes:
+      description: Success
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/successObj'
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/cakeObjRes'
+    cakesRes:
+      description: Success
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/successObj'
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/cakeObjRes'
+    badRequestRes:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errorObj'
+    notFoundRes:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/successObj'
+            type: object
+            properties:
+              data:
+                type: object
+    deleteSuccessRes:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/successObj'
