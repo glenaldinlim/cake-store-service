@@ -29,9 +29,10 @@ func NewCakeService(cakeRepository repository.CakeRepository, DB *sql.DB, valida
 func (service *CakeServiceImpl) FindAll(ctx context.Context) []entity.Cake {
 	tx, err := service.DB.Begin()
 	if err != nil {
+		utils.Logger().Errorf("[DB Tx Exception] CakeService.FindAll: %s", err.Error())
 		panic(err)
 	}
-	defer utils.CommitOrRollback("CakeService.FindAll: CommitOrRollbackt", tx)
+	defer utils.CommitOrRollback(tx)
 
 	cakes := service.CakeRepository.FindAll(ctx, tx)
 	return cakes
@@ -40,9 +41,10 @@ func (service *CakeServiceImpl) FindAll(ctx context.Context) []entity.Cake {
 func (service *CakeServiceImpl) FindById(ctx context.Context, cakeId int64) entity.Cake {
 	tx, err := service.DB.Begin()
 	if err != nil {
+		utils.Logger().Errorf("[DB Tx Exception] CakeService.FindById: %s", err.Error())
 		panic(err)
 	}
-	defer utils.CommitOrRollback("CakeService.FindById: CommitOrRollbackt", tx)
+	defer utils.CommitOrRollback(tx)
 
 	cake, err := service.CakeRepository.FindById(ctx, tx, cakeId)
 	if err != nil {
@@ -55,14 +57,16 @@ func (service *CakeServiceImpl) FindById(ctx context.Context, cakeId int64) enti
 func (service *CakeServiceImpl) Create(ctx context.Context, request web.CakeRequest) entity.Cake {
 	err := service.Validate.Struct(request)
 	if err != nil {
+		utils.Logger().Errorf("[Validation] CakeService.Create: %s", err.Error())
 		panic(err)
 	}
 
 	tx, err := service.DB.Begin()
 	if err != nil {
+		utils.Logger().Errorf("[DB Tx Exception] CakeService.Create: %s", err.Error())
 		panic(err)
 	}
-	defer utils.CommitOrRollback("CakeService.Create: CommitOrRollbackt", tx)
+	defer utils.CommitOrRollback(tx)
 
 	cake := entity.Cake{
 		Title:       request.Title,
@@ -78,14 +82,16 @@ func (service *CakeServiceImpl) Create(ctx context.Context, request web.CakeRequ
 func (service *CakeServiceImpl) Update(ctx context.Context, request web.CakeRequest, cakeId int64) entity.Cake {
 	err := service.Validate.Struct(request)
 	if err != nil {
+		utils.Logger().Errorf("[Validation] CakeService.Update: %s", err.Error())
 		panic(err)
 	}
 
 	tx, err := service.DB.Begin()
 	if err != nil {
+		utils.Logger().Errorf("[DB Tx Exception] CakeService.Update: %s", err.Error())
 		panic(err)
 	}
-	defer utils.CommitOrRollback("CakeService.Update: CommitOrRollbackt", tx)
+	defer utils.CommitOrRollback(tx)
 
 	cake, err := service.CakeRepository.FindById(ctx, tx, cakeId)
 	if err != nil {
@@ -105,9 +111,10 @@ func (service *CakeServiceImpl) Update(ctx context.Context, request web.CakeRequ
 func (service *CakeServiceImpl) Delete(ctx context.Context, cakeId int64) {
 	tx, err := service.DB.Begin()
 	if err != nil {
+		utils.Logger().Errorf("[DB Tx Exception] CakeService.Delete: %s", err.Error())
 		panic(err)
 	}
-	defer utils.CommitOrRollback("CakeService.Delete: CommitOrRollbackt", tx)
+	defer utils.CommitOrRollback(tx)
 
 	cake, err := service.CakeRepository.FindById(ctx, tx, cakeId)
 	if err != nil {

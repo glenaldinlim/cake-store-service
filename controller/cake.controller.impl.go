@@ -52,6 +52,7 @@ func (controller *CakeControllerImpl) Update(writer http.ResponseWriter, request
 	cakeId := params.ByName("id")
 	id, err := strconv.ParseInt(cakeId, 10, 64)
 	if err != nil {
+		utils.Logger().WithField("cakeId", cakeId).Errorf("[Parse] CakeController.Update: %s", err.Error())
 		panic(err)
 	}
 
@@ -69,6 +70,7 @@ func (controller *CakeControllerImpl) Show(writer http.ResponseWriter, request *
 	cakeId := params.ByName("id")
 	id, err := strconv.ParseInt(cakeId, 10, 64)
 	if err != nil {
+		utils.Logger().WithField("cakeId", cakeId).Errorf("[Parse] CakeController.Show: %s", err.Error())
 		panic(err)
 	}
 
@@ -86,6 +88,7 @@ func (controller *CakeControllerImpl) Destroy(writer http.ResponseWriter, reques
 	cakeId := params.ByName("id")
 	id, err := strconv.ParseInt(cakeId, 10, 64)
 	if err != nil {
+		utils.Logger().WithField("cakeId", cakeId).Errorf("[Parse] CakeController.Destroy: %s", err.Error())
 		panic(err)
 	}
 

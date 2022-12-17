@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"net/http"
 
 	"github.com/glenaldinlim/cake-store-service/controller"
@@ -9,6 +8,7 @@ import (
 	"github.com/glenaldinlim/cake-store-service/exception"
 	"github.com/glenaldinlim/cake-store-service/repository"
 	"github.com/glenaldinlim/cake-store-service/service"
+	"github.com/glenaldinlim/cake-store-service/utils"
 	"github.com/go-playground/validator/v10"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/julienschmidt/httprouter"
@@ -37,9 +37,10 @@ func main() {
 		Handler: router,
 	}
 
-	log.Printf("server running on %s", server.Addr)
+	utils.Logger().Infof("service running on %s", server.Addr)
 	err := server.ListenAndServe()
 	if err != nil {
+		utils.Logger().Errorf("failed to running service: %s", err.Error())
 		panic(err)
 	}
 }
