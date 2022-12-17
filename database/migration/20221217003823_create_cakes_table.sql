@@ -6,8 +6,8 @@ CREATE TABLE IF NOT EXISTS cakes(
     description LONGTEXT                NOT NULL,
     rating      FLOAT(3,1) DEFAULT 0.0  NOT NULL,
     image       VARCHAR(255)            NOT NULL,
-    reated_at   TIMESTAMP               NULL,
-	updated_at  TIMESTAMP               NULL,
+    created_at  TIMESTAMP DEFAULT NOW() NULL,
+	updated_at  TIMESTAMP DEFAULT NOW() NULL,
 
     constraint cakes_pk
 		primary key (id)

@@ -2,18 +2,15 @@ package database
 
 import (
 	"database/sql"
-	"log"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
 )
 
-var DB *sql.DB
-
-func InitDB() {
+func InitDB() *sql.DB {
 	db, err := sql.Open("mysql", "cake:secret@tcp(localhost:3306)/cake_store?parseTime=true")
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 
 	db.SetMaxIdleConns(5)
@@ -21,5 +18,5 @@ func InitDB() {
 	db.SetConnMaxLifetime(60 * time.Minute)
 	db.SetConnMaxIdleTime(10 * time.Minute)
 
-	DB = db
+	return db
 }
