@@ -8,7 +8,7 @@ import (
 )
 
 func InitDB() *sql.DB {
-	db, err := sql.Open("mysql", "cake:secret@tcp(localhost:3306)/cake_store?parseTime=true")
+	db, err := sql.Open("mysql", "cake:secret@tcp(cake-store-db:3306)/cake_store?parseTime=true")
 	if err != nil {
 		panic(err)
 	}
