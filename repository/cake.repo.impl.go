@@ -4,7 +4,6 @@ import (
 	"context"
 	"database/sql"
 	"errors"
-	"time"
 
 	"github.com/glenaldinlim/cake-store-service/model/entity"
 	"github.com/glenaldinlim/cake-store-service/utils"
@@ -82,7 +81,7 @@ func (repo *CakeRepositoryImpl) Save(ctx context.Context, tx *sql.Tx, cake entit
 
 func (repo *CakeRepositoryImpl) Update(ctx context.Context, tx *sql.Tx, cake entity.Cake) entity.Cake {
 	SQL := "UPDATE cakes SET title = ?, description = ?, rating = ?, image = ?, updated_at = ? WHERE id = ?"
-	_, err := tx.ExecContext(ctx, SQL, cake.Title, cake.Description, cake.Rating, cake.Image, time.Now(), cake.Id)
+	_, err := tx.ExecContext(ctx, SQL, cake.Title, cake.Description, cake.Rating, cake.Image, cake.UpdatedAt, cake.Id)
 	if err != nil {
 		utils.Logger().Errorf("[DB Exception] CakeRepository.Update: %s", err.Error())
 		panic(err)

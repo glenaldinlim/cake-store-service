@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"database/sql"
+	"time"
 
 	"github.com/glenaldinlim/cake-store-service/exception"
 	"github.com/glenaldinlim/cake-store-service/model/entity"
@@ -102,6 +103,7 @@ func (service *CakeServiceImpl) Update(ctx context.Context, request web.CakeRequ
 	cake.Description = request.Description
 	cake.Rating = request.Rating
 	cake.Image = request.Image
+	cake.UpdatedAt = time.Now()
 
 	cake = service.CakeRepository.Update(ctx, tx, cake)
 
