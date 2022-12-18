@@ -19,7 +19,7 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/cakeReq'
       responses:
-        '201':
+        '200':
           $ref: '#/components/responses/cakeRes'
         '400':
           $ref: '#/components/responses/badRequestRes'
@@ -61,10 +61,6 @@ components:
     errorObj:
       type: object
       properties:
-        code:
-          type: integer
-        error:
-          type: string
         message:
           type: string
     successObj:
@@ -153,7 +149,9 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/errorObj'
+            allOf:
+              - $ref: '#/components/schemas/successObj'
+              - $ref: '#/components/schemas/errorObj'
     notFoundRes:
       description: Not Found
       content:
@@ -161,10 +159,7 @@ components:
           schema:
             allOf:
               - $ref: '#/components/schemas/successObj'
-            type: object
-            properties:
-              data:
-                type: object
+              - $ref: '#/components/schemas/errorObj'
     deleteSuccessRes:
       description: Success
       content:
