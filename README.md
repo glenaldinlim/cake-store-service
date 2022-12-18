@@ -12,7 +12,7 @@ Available Route:
 | Update  | PATCH  | /cakes/:id | Yes          |
 | Destroy | DELETE | /cakes/:id | No           |
 
-Request Body Payload:
+Example Request Body Payload:
 ```json
 {
   "title": "Tiramisu Oreo Cake",
