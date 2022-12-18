@@ -1,4 +1,27 @@
 # Cake Store Service
+A simple RESTful API created with GoLang and MySQL as Database Server
+Postman Collection: https://www.postman.com/galactic-star-21684/workspace/cake-store-service-api  
+
+URI: http://localhost:8090/api  
+Available Route:
+| Name    | Method | Endpoint   | Request Body |
+| ------- | ------ | ---------- | ------------ |
+| Index   | GET    | /cakes     | No           |
+| Store   | POST   | /cakes     | Yes          |
+| Show    | GET    | /cakes/:id | No           |
+| Update  | PATCH  | /cakes/:id | Yes          |
+| Destroy | DELETE | /cakes/:id | No           |
+
+Request Body Payload:
+```json
+{
+  "title": "Tiramisu Oreo Cake",
+  "description": "Cake with tiramisu flavour and oreo topping",
+  "rating": 8.1,
+  "image": "https://img.taste.com.au/ynYrqkOs/w720-h480-cfill-q80/taste/2016/11/sunny-lemon-cheesecake-102220-1.jpeg"
+}
+```
+
 Library List
 - Routing: [HttpRouter](https://github.com/julienschmidt/httprouter)
 - Database
@@ -6,6 +29,7 @@ Library List
   - Migration Tool: [Goose](https://github.com/pressly/goose)
 - Validation: [Validator](https://github.com/go-playground/validator)
 - Logger: [Logrus](https://github.com/sirupsen/logrus)
+- Unit Test: [Testify](https://github.com/stretchr/testify)
 
 ## Running App
 ### 1. Start Compose
@@ -16,7 +40,13 @@ Library List
   - `make migration-up` will migrate the DB that has been define in `./database/migration` directory
   - `make migration-down` will rollback the migration before
 ### 3. Run Unit Test
-TBA
+Change directory to test directory and run selected command
+- Run `go test -v` to run all test
+- Run `go test -v -run=TestCakeRepo` to run cake repository test
+- Run `go test -v -run=TestCakeSrv` to run cake service test
+- Run `go test -v -run=TestCakeController` to run cake controller test
+
+The `go test` command can in project root directory
 ### 4. Stop Compose
 - With make command use `make compose-down` or without make command use `docker-compose kill && docker-compose rm -f`
 
