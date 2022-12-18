@@ -26,9 +26,9 @@ func internalServerError(writer http.ResponseWriter, request *http.Request, err 
 	writer.WriteHeader(http.StatusInternalServerError)
 
 	res := web.WebResponse{
-		Code:     http.StatusInternalServerError,
-		Status:   "INTERNAL SERVER ERROR",
-		Messsage: fmt.Sprintf("%v", err),
+		Code:    http.StatusInternalServerError,
+		Status:  "INTERNAL SERVER ERROR",
+		Message: fmt.Sprintf("%v", err),
 	}
 
 	utils.WriteResponseBody("Exception: InternalServerError", writer, res)
@@ -42,9 +42,9 @@ func notFoundError(writer http.ResponseWriter, request *http.Request, err interf
 		writer.WriteHeader(http.StatusNotFound)
 
 		res := web.WebResponse{
-			Code:     http.StatusNotFound,
-			Status:   "NOT FOUND",
-			Messsage: exception.Error,
+			Code:    http.StatusNotFound,
+			Status:  "NOT FOUND",
+			Message: exception.Error,
 		}
 
 		utils.WriteResponseBody("Exception: InternalServerError", writer, res)
@@ -62,9 +62,9 @@ func validationErrors(writer http.ResponseWriter, request *http.Request, err int
 		writer.WriteHeader(http.StatusBadRequest)
 
 		res := web.WebResponse{
-			Code:     http.StatusBadRequest,
-			Status:   "BAD REQUEST",
-			Messsage: exception.Error(),
+			Code:    http.StatusBadRequest,
+			Status:  "BAD REQUEST",
+			Message: exception.Error(),
 		}
 
 		utils.WriteResponseBody("Exception: InternalServerError", writer, res)
